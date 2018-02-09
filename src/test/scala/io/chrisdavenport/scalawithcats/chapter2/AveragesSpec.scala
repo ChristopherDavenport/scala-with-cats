@@ -7,6 +7,7 @@ import cats.kernel.laws.discipline._
 import org.scalatest.{FunSuite, Matchers}
 import org.typelevel.discipline.scalatest.Discipline
 import cats.implicits._
+import Averages._
 
 object AveragesSpec extends FunSuite with Matchers with Discipline {
   implicit val arbAverages: Arbitrary[Averages] = Arbitrary{
