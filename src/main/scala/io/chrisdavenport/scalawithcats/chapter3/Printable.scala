@@ -2,7 +2,7 @@ package io.chrisdavenport.scalawithcats.chapter3
 
 import cats._
 
-trait Printable[A] { self => 
+trait Printable[A] {
   def format(value: A): String
 }
 
