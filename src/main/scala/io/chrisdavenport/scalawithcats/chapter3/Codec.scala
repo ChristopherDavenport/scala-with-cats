@@ -5,10 +5,12 @@ import cats.Invariant
 trait Codec[A]{
   def encode(value: A): String
   def decode(value: String): A
-
 }
 
 object Codec {
+
+  def apply[A](implicit ev: Codec[A]): Codec[A] = ev
+
   implicit val invariantCodec : Invariant[Codec] = new Invariant[Codec]{
     override def imap[A,B](fa: Codec[A])(f: A => B)(g: B => A): Codec[B] = new Codec[B]{
       override def encode(value: B): String = fa.encode(g(value))
@@ -22,7 +24,7 @@ object Codec {
   }
   implicit val intCodec: Codec[Int] = invariantCodec.imap(stringCodec)(_.toInt)(_.toString)
   implicit val booleanCodec: Codec[Boolean] = invariantCodec.imap(stringCodec)(_.toBoolean)(_.toString)
-  case class CodecBox[A](value: A)
-  implicit def codecBox[A](implicit C: Codec[A]) = invariantCodec.imap[A, CodecBox[A]](C)(CodecBox[A](_))(_.value)
+  case class Box[A](value: A)
+  implicit def codecBox[A](implicit C: Codec[A]) = invariantCodec.imap[A, Box[A]](C)(a => Box[A](a))(box => box.value)
 
 }
