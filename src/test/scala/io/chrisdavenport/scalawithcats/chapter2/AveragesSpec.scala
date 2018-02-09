@@ -1,3 +1,4 @@
+/*
 package io.chrisdavenport.scalawithcats.chapter2
 
 import org.scalacheck.Arbitrary
@@ -24,3 +25,4 @@ object AveragesSpec extends FunSuite with Matchers with Discipline {
   checkAll("Averages Semigroup", SemigroupTests[Averages].semigroup)
   checkAll("Averages Semigroup", SemigroupTests[Int].semigroup)
 }
+*/
