@@ -2,6 +2,7 @@ package io.chrisdavenport.scalawithcats.chapter4
 
 import cats.data._
 import cats.implicits._
+import cats._
 
 object ShowYourWork {
   // SLOWLY
@@ -25,7 +26,7 @@ object ShowYourWork {
 
   def factorialWriter(n: Int): Writer[Vector[String], Int] = {
     val ans = slowly(if (n == 0) 1.pure[Writer[Vector[String], ?]] else factorialWriter(n - 1).map(_ * n))
-    
+
     for {
       a <- ans
       _ <- Vector(s"fact $n $a").tell
@@ -43,5 +44,15 @@ object ShowYourWork {
     println(out)
   }
 
+  object TestWriter {
+    class MyWriter[L, R](run: => (L, R)){
+      def tell(l: L)(implicit S: Semigroup[L]): MyWriter[L, R] = {
+        lazy val (lr, rr) = run
+        new MyWriter((S.combine(lr, l), rr))
+      }
+      def written = run._1
+      def value = run._2
+    }
+  }
 
 }
