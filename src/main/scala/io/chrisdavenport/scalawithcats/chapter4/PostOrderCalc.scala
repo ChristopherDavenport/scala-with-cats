@@ -105,6 +105,12 @@ object PostOrderCalc {
     println(result)
   }
 
+  def test7(): Unit = {
+    val prog = evalAll(List("1", "2", "3", "+", "*")) *> State.get
+    val result = prog.runA(Either.right(Nil)).value
+    println(result)
+  }
+
 
 
 
