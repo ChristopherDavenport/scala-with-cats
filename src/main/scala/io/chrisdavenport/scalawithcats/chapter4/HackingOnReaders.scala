@@ -2,6 +2,7 @@ package io.chrisdavenport.scalawithcats.chapter4
 
 import cats.implicits._
 import cats.data._
+import cats._
 
 object HackingOnReaders {
 
@@ -15,11 +16,16 @@ object HackingOnReaders {
   def checkPassword(username: String, password: String): Reader[DB, Boolean] =
     Reader[DB, Boolean](_.passwords.get(username).map(_ === password).getOrElse(false))
 
-  def checkLogin(userId: Int, password: String): Reader[DB, Boolean] = for {
-    userName <- findUsername(userId)
-    // If Missing False, If UserId Exists CheckPassword
-    bool <- userName.fold(false.pure[Reader[DB, ?]])(checkPassword(_, password))
-  } yield bool
+  def checkLogin(userId: Int, password: String): Reader[DB, Boolean] = 
+    findUsername(userId).flatMap{ userName => 
+      userName.fold(Applicative[Reader[DB, ?]].pure(false))(checkPassword(_, password))
+    }
+  
+  // for {
+  //   userName <- findUsername(userId)
+  //   // If Missing False, If UserId Exists CheckPassword
+  //   bool <- userName.fold(false.pure[Reader[DB, ?]])(checkPassword(_, password))
+  // } yield bool
 
   def checkExample(): Unit = {
     val users = Map(

@@ -25,12 +25,17 @@ object ShowYourWork {
   }
 
   def factorialWriter(n: Int): Writer[Vector[String], Int] = {
-    val ans = slowly(if (n == 0) 1.pure[Writer[Vector[String], ?]] else factorialWriter(n - 1).map(_ * n))
+    // val ans = 
+    slowly(
+      if (n == 0) 1.pure[Writer[Vector[String], ?]] 
+      else factorialWriter(n - 1).map(_ * n)
+    ).flatMap(a => 
+      Writer.tell[Vector[String]](Vector(s"fact $n $a")).map(_ => a))
 
-    for {
-      a <- ans
-      _ <- Vector(s"fact $n $a").tell
-    } yield a
+    // for {
+    //   a <- ans
+    //   _ <- Vector(s"fact $n $a").tell
+    // } yield a
   }
 
   def futureWriter(): Unit = {
