@@ -2,6 +2,7 @@ package io.chrisdavenport.scalawithcats.chapter4
 
 import cats.Monad
 import scala.annotation.tailrec
+import cats.implicits._
 
 sealed trait Tree[+A]
 final case class Branch[A](left: Tree[A], right: Tree[A])
@@ -84,5 +85,7 @@ object Tree {
       loop(f(a) :: Nil , List.empty[Tree[B]]).head
     }
   }
+
+  def fill[A](n: Int)(a: A): Tree[A] = List.fill(n - 1)(a.pure[Tree]).foldRight(a.pure[Tree])((l, r) => Branch(l, r))
 
 }

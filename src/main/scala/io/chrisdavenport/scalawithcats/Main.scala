@@ -2,7 +2,7 @@ package io.chrisdavenport.scalawithcats
 
 // import chapter3._
 import chapter4._
-import PostOrderCalc._
+import cats.implicits._
 // import cats._
 // import cats.implicits._
 // import Codec._
@@ -11,13 +11,9 @@ import PostOrderCalc._
 object Main {
 
   def main(args: Array[String]): Unit = {
-    test1()
-    test2()
-    test3()
-    test4()
-    test5()
-    test6()
-    test7()
+    val t = Tree.fill(10000)(1)
+      .flatMap(i => Branch(i.pure[Tree], Branch((i - 1).pure[Tree], (i + 1).pure[Tree])))
+    val _ = t
 
   }
 
