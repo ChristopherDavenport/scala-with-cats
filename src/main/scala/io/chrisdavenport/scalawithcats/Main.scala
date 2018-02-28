@@ -13,6 +13,11 @@ object Main {
     println(composed)
 
     composed.traverse(i => Eval.now(println(show"Found $i"))).void.value
+    composed
+      .flatMap(i => Tree.branch(Tree.leaf(i - 1), Tree.leaf(i + 1)))
+      .pure[Eval]
+      .map(println(_))
+      .value
 
   }
 
