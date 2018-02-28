@@ -2,6 +2,7 @@ package io.chrisdavenport.scalawithcats.chapter4
 
 import cats.implicits._
 import cats.data._
+// import cats._
 
 object PostOrderCalc {
 
@@ -30,6 +31,7 @@ object PostOrderCalc {
         )
     }
   }
+  // def applyCombinerF[F[_]](implicit F: MonadError[F, Throwable]): StateT[F, List[Op], Num] = 
 
   // Also Not Good!
   def applyCombiner(f: (Num, Num) => Num): State[Either[ParseFailure, List[Op]], Option[Num]] = State[Either[ParseFailure, List[Op]], Option[Num]]{
@@ -73,7 +75,8 @@ object PostOrderCalc {
     println(result)
   }
 
-  def evalAll(l: List[String]): State[Either[ParseFailure, List[Op]], Unit] = l.foldLeft(().pure[State[Either[ParseFailure, List[Op]], ?]])(_ *> evalOne(_))
+  def evalAll(l: List[String]): State[Either[ParseFailure, List[Op]], Unit] = 
+    l.foldLeft(().pure[State[Either[ParseFailure, List[Op]], ?]])(_ *> evalOne(_))
 
   def test3(): Unit = {
     val prog = evalAll(List("1", "2", "+", "3", "*")) *> State.get
