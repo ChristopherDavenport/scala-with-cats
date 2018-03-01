@@ -26,7 +26,7 @@ lazy val commonSettings = Seq(
 //    "org.typelevel"               %% "alleycats-core"             % "1.0.0-RC1",
 //    "org.typelevel"               %% "mouse"                      % "0.12",
 //
-   "org.typelevel"               %% "cats-effect"                % "0.8",
+    "org.typelevel"               %% "cats-effect"                % "0.9",
 //
 //    "com.chuusai"                 %% "shapeless"                  % "2.3.2",
 //
