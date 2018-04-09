@@ -16,6 +16,30 @@ object UptimeClient{
     3
   }
 
+  def func[F[_], A, B >: A](a: A)(F: Applicative[F]) : F[B] = Applicative[F].pure(a).widen
+
+
+    // Some => Option
+    def something[A](s: Some[A]): Option[A] = s
+
+    // Option =!> Some
+    def otherWay[A](o: Option[A]): Some[A] = ???
+
+    // Functor => Covariant Functor
+    
+    //
+    // sealed trait Animal {
+    //   def moo : String
+    // }
+    // final case object Dog {def moo = "Bark"} extends Animal
+    // final case object Cat {def moo = "Meow"} extends Animal
+    // 
+    //
+    //
+    // val l : List[Animal] = List(Dog, Cat, Dog)
+
+
+
   // Monad
   // F[A] => (A => F[B]) => F[B]
   // Comonad
