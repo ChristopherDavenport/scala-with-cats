@@ -16,14 +16,14 @@ object UptimeClient{
     3
   }
 
-  def func[F[_], A, B >: A](a: A)(F: Applicative[F]) : F[B] = Applicative[F].pure(a).widen
+  // def func[F[_], A, B >: A](a: A)(F: Applicative[F]) : F[B] = Applicative[F].pure(a).widen
 
 
-    // Some => Option
-    def something[A](s: Some[A]): Option[A] = s
+  //   // Some => Option
+  //   def something[A](s: Some[A]): Option[A] = s
 
-    // Option =!> Some
-    def otherWay[A](o: Option[A]): Some[A] = ???
+  //   // Option =!> Some
+  //   def otherWay[A](o: Option[A]): Some[A] = ???
 
     // Functor => Covariant Functor
     

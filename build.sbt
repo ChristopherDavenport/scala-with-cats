@@ -26,11 +26,11 @@ lazy val commonSettings = Seq(
 //    "org.typelevel"               %% "alleycats-core"             % "1.0.0-RC1",
 //    "org.typelevel"               %% "mouse"                      % "0.12",
 //
-    "org.typelevel"               %% "cats-effect"                % "0.9",
+    "org.typelevel"               %% "cats-effect"                % "0.10",
 //
 //    "com.chuusai"                 %% "shapeless"                  % "2.3.2",
 //
-//    "co.fs2"                      %% "fs2-core"                   % "0.10.0-M8",
+   "co.fs2"                      %% "fs2-core"                   % "0.10.3",
 //    "co.fs2"                      %% "fs2-io"                     % "0.10.0-M8",
 //
 //    "org.http4s"                  %% "http4s-dsl"                 % "0.18.0-M5",
