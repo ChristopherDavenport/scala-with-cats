@@ -211,6 +211,32 @@ object DataValidation {
   //   a.and(a)(b)
   // }
 
+  object StateFun {
+    import cats.effect.Sync
+    def whileState[F[_]: Sync, A](l: List[A], check: A => Boolean, effect: A => F[Unit]): F[Unit] = {
+      def doEffect(a: A): StateT[F, Boolean, Unit] = StateT{b: Boolean => 
+        if (b) effect(a) *> Sync[F].delay((b, ()))  else Applicative[F].pure((b, ()))
+      }
+      def doCheck(a: A): StateT[F, Boolean, Unit] = StateT.modify{b =>
+        if (b){
+          check(a)
+        } else b
+      }
+      def runState(a: A): StateT[F, Boolean, Unit] = for {
+        _ <- doCheck(a)
+        _ <- doEffect(a)
+      } yield ()
+
+      val action : StateT[F, Boolean, Unit] = l.traverse_(runState)
+      
+      action.runA(true)
+    }
+
+    def forAllState[F[_]: Sync, A](l: List[A], effect: A => F[Unit]): F[Unit] =
+      whileState[F, A](l, _ => true, effect)
+
+
+  }
 
 
 }
