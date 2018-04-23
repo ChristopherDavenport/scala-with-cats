@@ -13,10 +13,10 @@ object GCounterExercises {
     def merge(that: GCounter): GCounter = {
       val eventualMap : scala.collection.mutable.Map[String, Int] = 
         scala.collection.mutable.Map[String, Int]()
-
-      
+      // Add All Current Values
       counters.map{ case (k, v)=> eventualMap += (k -> v)}
-
+      // Add All New Values if they are missing or if they are larger
+      // then those present in counters
       that.counters.map{case (k,vThat) => 
         counters.get(k).fold(
           eventualMap += (k ->  vThat)
